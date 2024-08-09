@@ -2,6 +2,7 @@
 A project begun for my Summer 2024 Data Structures coursework. The goal is to write a C++ program that implements Perlin noise and outputs a bitmap image.
 
 ## Introduction
+### The Algorithm - Perlin Noise
 Perlin Noise was first developed in the 1980's while Ken Perlin was working on special effects for the movie Tron. It was created to address a very specific problem: true randomness (or noise) is rarely visually appealing. Take, for example, the following image, where all of the pixels have a randomized grayscale value between black and white assigned to them.
 \
 ![raw_noise](https://github.com/user-attachments/assets/38f5f8fd-ef90-4454-a9a6-48f15d7ae142)
@@ -17,12 +18,23 @@ Amidst the randomness of the image, it is possible discern shapes that resemble 
 Today, Perlin Noise is a staple of computer graphics, used to introduce variation in surfaces, geometry, volumes, and more. It's implemented in most major CG software packages, including Autodesk Maya, 3D Studio Max, Renderman, Cinema 4D, Houdini, and more.
 
 
-## The Algorithm - Perlin Noise
-One of the wonderful characteristics of Perlin Noise is that, abstractly, it's a simple algorithm. Referring to his previous work in a 2002 paper, Perlin writes "[In three dimensions] Noise is determined at point (x,y,z) by computing a pseudo-random gradient at each of the eight nearest vertices on the integer cubic lattice and then doing splined interpolation." <sup>2</sup> The same principle applies in as many dimensions as you
+## Workings Explained
+### Perlin Noise
+One of the wonderful characteristics of Perlin Noise is that, abstractly, it's a simple algorithm. Referring to his previous work in a 2002 paper, Perlin writes "[In three dimensions] Noise is determined at point (x,y,z) by computing a pseudo-random gradient at each of the eight nearest vertices on the integer cubic lattice and then doing splined interpolation." <sup>2</sup> The same principle applies in as many dimensions as one wants. For the purposes of this project, we will be discussing Perlin Noise within a 2D space, with coordinates *x* and *y*.
+
+#### Defining a grid to form the gradient
+In the case of 2D perlin noise, a 2D grid of integer points is taken as an input.\
+![point_grid_1](https://github.com/user-attachments/assets/2c99bb35-3121-4915-9c75-210f10aa9595)\
+A little work needs to happen with the input grid to get it really for the algorithm. What happens is the grid has constant, pseudo-random 2-dimensional unit vectors added for every point of the grid.
+
+
+![point_grid_2](https://github.com/user-attachments/assets/0d573fe0-007f-41cb-8199-c4287ef36ddc)\
+
+
 
 Perlin Noise is cool<sup>3</sup>
 
 References:
-1.https://cs.nyu.edu/~perlin/doc/oscar.html
+1. https://cs.nyu.edu/~perlin/doc/oscar.html\
 2. http://mrl.nyu.edu/~perlin/paper445.pdf\
-3. https://rtouti.github.io/graphics/perlin-noise-algorithm
+3. https://rtouti.github.io/graphics/perlin-noise-algorithm\

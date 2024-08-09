@@ -1,6 +1,12 @@
 # Perlin Noise & Bitmap Project
-A project begun for my Summer 2024 Data Structures coursework. The goal is to write a C++ program that implements Perlin noise and outputs a bitmap image.\
-![raw_noise](https://github.com/user-attachments/assets/38f5f8fd-ef90-4454-a9a6-48f15d7ae142)
+A project begun for my Summer 2024 Data Structures coursework. The goal is to write a C++ program that implements Perlin noise and outputs a bitmap image.
+
+## Introduction
+
+![raw_noise](https://github.com/user-attachments/assets/38f5f8fd-ef90-4454-a9a6-48f15d7ae142)\
+
+The following image gives an example of the kind of result Perlin noise can look like:\
+![noiseTexture (1)](https://github.com/user-attachments/assets/635af4ca-25c8-41dd-865b-5819b19ff9a4)\
 
 
 ## The Algorithm - Perlin Noise

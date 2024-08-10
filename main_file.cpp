@@ -2,6 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <random>
+#include <string>
 #include <cstdint> // for specific size integers
 #include <fstream> // for file handling
 
@@ -189,7 +190,12 @@ int main(){
     vector<vector<pixel>> pixel_store;
     processPixels(pixel_store,pixel_dimension, grid);
 
-    ofstream fout("output.bmp", ios::binary);
+    string name = "";
+    cout << "Enter a file name with no extension: ";
+    cin >> name;
+    name = name + ".bmp";
+
+    ofstream fout(name, ios::binary);
 
     BmpHeader file_head;
     file_head.sizeOfBitmapFile = 54 + (3* pixel_dimension*pixel_dimension);

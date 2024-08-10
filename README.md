@@ -35,17 +35,18 @@ What we need is a set of distance vectors from the nearest points corners of the
 
 ![point_grid_3](https://github.com/user-attachments/assets/c323b3b0-df2a-4396-afda-ff5bdd58229f)
 
-We now have two vectors for each corner. Here, we take the dot product of the two vectors, repeating the process for each corner. This produces 4 dot products in total. 
+We now have two vectors for each corner. Here, we take the dot product of the two vectors, repeating the process for each corner. In order to calculate the dot product, we multiply the corresponding x and y components of the vectors together, and add them<sup>4</sup>.This looks like *dot_product* = v1[x]*v2[x] + v1[y]*v2[y]. This produces 4 dot products in total. 
 
 NOTE: while it's not a step of the algorithm, it may be helpful to visualize what we've done here. If we repeated this process for a number of prospective points across the grid, we'd end up with a series of dot products that covered the grid, and looked something like this:
 
 ![640px-PerlinNoiseDotProducts svg](https://github.com/user-attachments/assets/3c510080-ade3-496f-8fa7-9625b7a68133)
 
 
-Perlin Noise is cool<sup>3</sup>
+Perlin Noise is cool<sup>5</sup>
 
 References:
 1. https://cs.nyu.edu/~perlin/doc/oscar.html\
 2. http://mrl.nyu.edu/~perlin/paper445.pdf\
 3. https://adrianb.io/2014/08/09/perlinnoise.html
-4. https://rtouti.github.io/graphics/perlin-noise-algorithm\
+4. https://www.educative.io/answers/dot-product-of-two-vectors-in-cpp
+5. https://rtouti.github.io/graphics/perlin-noise-algorithm\

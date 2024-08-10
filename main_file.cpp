@@ -11,6 +11,12 @@ mt19937 gen(rd()); // seed the generator
 uniform_int_distribution<> distr(0, 360); // define the range
 // use distr(gen)
 
+struct pixel {
+    int r = 0;
+    int g = 0;
+    int b = 0;
+};
+
 double lerp(double t, double a, double b) {
     //linear interpolation function
     return a + t * (b - a); 
@@ -40,6 +46,32 @@ void populateGrid(vector<vector<vector<float>>> &grid, int dimension){
     }
 }
 
+float pointConvert(int coordinate, int pixel_dimension, int grid_dimension){
+    float c = float(coordinate);
+    float p = float(pixel_dimension);
+    float g = float(grid_dimension);
+    float ret = (c/p)*g;
+    return ret;
+
+}
+
+int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dimension){
+    //Input is x, y coordinate pair 
+    //Step 1 - coordinates to grid points
+    float x_c = pointConvert(x, pixel_dimension, grid.size());
+    float y_c = pointConvert(y, pixel_dimension, grid.size());
+    return 0;
+}
+
+void processPixels(vector<vector<pixel>> &pixel_grid, int pixel_dimension, vector<vector<vector<float>>> grid){
+    for (int row = 0; row < pixel_dimension; row++){
+        for (int col = 0; col < pixel_dimension; col++){
+            pixel current;
+            current.r = current.g = current.b = perlinNoise(row, col, grid, pixel_dimension);
+        }
+    }
+}
+
 int main(){
 
     int dimension = 0;
@@ -47,10 +79,22 @@ int main(){
         cout << "Define grid width and height with an integer between 3 and 10: "; 
         cin >> dimension;
     }
+    int pixel_dimension = 0;
+    while (pixel_dimension < 50 || pixel_dimension > 1500){
+        cout <<"This program will create a square bitmap image. Please enter a pixel dimension (an integer): ";
+        cin >> pixel_dimension;
+    }
+    
+    // Step 1 - Create the grid and populate it with pseudorandom unit vectors
     vector<vector<vector<float>>> grid; // grid[row][column] populated with 2D unit vectors
     populateGrid(grid, dimension);
 
-    cout << "testing pi: " << M_PI << endl;
-    cout <<"This is a test. Project work to follow. dim: " << dimension << endl;
+    //Step 2 - Conduct Project Work
+    vector<vector<pixel>> pixel_store;
+    processPixels(pixel_store,pixel_dimension, grid);
+
+    //float testo = pointConvert(123, pixel_dimension, dimension);
+    //cout << "point conversion: " << testo << endl;
+
     return 0;
 }

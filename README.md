@@ -27,12 +27,13 @@ In the case of 2D perlin noise, a 2D grid of integer points is taken as an input
 ![point_grid_1](https://github.com/user-attachments/assets/2c99bb35-3121-4915-9c75-210f10aa9595)\
 A little work needs to happen with the input grid to get it ready for the algorithm. What happens is the grid has constant, pseudo-random 2-dimensional unit vectors added for every point of the grid.
 
-
+#### Getting a vector
 ![point_grid_2](https://github.com/user-attachments/assets/0d573fe0-007f-41cb-8199-c4287ef36ddc)\
 
 Now, for an arbitrary point with (x,y) coordinates expressed in float, there is some position within the grid where the point will sit<sup>3</sup>. \
 What we need is a set of distance vectors from the nearest points corners of the grid to our selected point. This gives us two vectors for each of those four points: the distance vector to our selected point and the pseudorandom vector on that point.
 
+#### Taking the cross product
 ![point_grid_3](https://github.com/user-attachments/assets/c323b3b0-df2a-4396-afda-ff5bdd58229f)
 
 We now have two vectors for each corner. Here, we take the dot product of the two vectors, repeating the process for each corner. In order to calculate the dot product, we multiply the corresponding x and y components of the vectors together, and add them<sup>4</sup>.This looks like *dot_product* = v1[x]*v2[x] + v1[y]*v2[y]. This produces 4 dot products in total. 
@@ -41,14 +42,27 @@ NOTE: while it's not a step of the algorithm, it may be helpful to visualize wha
 
 ![640px-PerlinNoiseDotProducts svg](https://github.com/user-attachments/assets/3c510080-ade3-496f-8fa7-9625b7a68133)
 
-The final step in the process is to interpolate the results of the dot products from the vectors. This is the step that makes Perlin Noise feel more natural than other noise algorithms. It forms a smooth gradient between the value of the graph. 
-Ken Perlin's original Perlin Noise implementation used 3t<sup>2</sup>-2t<sup>3</sup> to interpolate between values. This 
+#### Interpolating the results
+The final step in the process is to interpolate the results of the dot products from the vectors. This is the step that makes Perlin Noise feel more natural than other noise algorithms. It forms a smooth gradient between the values of the graph. 
+Ken Perlin's original Perlin Noise implementation used 3t<sup>2</sup>-2t<sup>3</sup> to interpolate between values. The final result looks something like the following:
 
-Perlin Noise is cool<sup>5</sup>
+![640px-PerlinNoiseInterpolated svg](https://github.com/user-attachments/assets/f9c93ea5-3ecb-49b6-b848-6d61a57dfabd)
+
+Unfortunately, one of the downsides of Perlin Noise is that it's not very efficient. Perlin Noise has a complexity of O(2^n) where n is the number of dimensions it's operating on<sup>5</sup>. 
+
+### The Data Structure - Bitmaps
+Bitmaps are a special kind of array based data structure. At the lowest level, they are composed of red, greed, and blue values which are associated with the colors an electronic display screen can output. These can be stored in a pixel struct, an array, or a number of other solutions. However, the greater bitmap structure itself is composed of a 2-Dimensional collection of these smaller pixel values. 
+
+My implementation of bitmaps used a vector of vectors of smaller pixel structs within C++. The pixel structs stored the three red, green, and blue values as integers from 0 to 255. Accessing the pixels can be done using (x,y) coordinates, for example pixel_grid[120][20] would be the pixel at (120, 20).
+
+
+
+Perlin Noise is cool<sup>5</sup
 
 References:
 1. https://cs.nyu.edu/~perlin/doc/oscar.html\
 2. http://mrl.nyu.edu/~perlin/paper445.pdf\
 3. https://adrianb.io/2014/08/09/perlinnoise.html
 4. https://www.educative.io/answers/dot-product-of-two-vectors-in-cpp
-5. https://rtouti.github.io/graphics/perlin-noise-algorithm\
+5. https://www.jordansavant.com/book/algorithms/perlin_noise.md
+6. https://rtouti.github.io/graphics/perlin-noise-algorithm\

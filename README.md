@@ -30,11 +30,17 @@ A little work needs to happen with the input grid to get it really for the algor
 
 ![point_grid_2](https://github.com/user-attachments/assets/0d573fe0-007f-41cb-8199-c4287ef36ddc)\
 
+Now, for an arbitrary point with (x,y) coordinates expressed in float, there is some position within the grid where the point will sit<sup>3</sup>. \
+What we need is a set of distance vectors from the nearest points corners of the grid to our selected point. This gives us two vectors for each of those four points: the distance vector to our selected point and the pseudorandom vector on that point.
 
+![point_grid_3](https://github.com/user-attachments/assets/c323b3b0-df2a-4396-afda-ff5bdd58229f)
+
+We now have two vectors for each corner. Here, we take the dot product of the 
 
 Perlin Noise is cool<sup>3</sup>
 
 References:
 1. https://cs.nyu.edu/~perlin/doc/oscar.html\
 2. http://mrl.nyu.edu/~perlin/paper445.pdf\
-3. https://rtouti.github.io/graphics/perlin-noise-algorithm\
+3. https://adrianb.io/2014/08/09/perlinnoise.html
+4. https://rtouti.github.io/graphics/perlin-noise-algorithm\

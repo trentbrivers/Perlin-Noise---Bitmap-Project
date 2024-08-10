@@ -55,7 +55,14 @@ Bitmaps are a special kind of array based data structure. At the lowest level, t
 
 My implementation of bitmaps used a vector of vectors of smaller pixel structs within C++. The pixel structs stored the three red, green, and blue values as integers from 0 to 255. Accessing the pixels can be done using (x,y) coordinates, for example pixel_grid[120][20] would be the pixel at (120, 20).
 
-##Using the Application
+## Using the Application
+Unfortunately, at present, I have no way of running the application. This may be amended beyond this class if I continue to work with the project. 
+Additionally, the output file appears blank because writing to a bmp file doesn't appear to work. 
+Compiling to an exe file doesn't work because it creates a 32-bit exe, which is incompatible with current Windows operating systems. 
+Running it from the terminal does work, and does produce an output file. Likewise, if you go through the program, you'll find that pixel values are stored accurately. I can't display them at present.
+
+![console](https://github.com/user-attachments/assets/f202a0b8-a3ae-4d45-b1b2-7800d7dc298b)
+
 
 References:
 1. https://cs.nyu.edu/~perlin/doc/oscar.html\

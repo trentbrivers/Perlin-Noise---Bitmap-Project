@@ -2,6 +2,8 @@
 #include <cmath>
 #include <vector>
 #include <random>
+#include <cstdint> // for specific size integers
+#include <fstream> // for file handling
 
 using namespace std;
 
@@ -12,10 +14,31 @@ uniform_int_distribution<> distr(0, 360); // define the range
 // use distr(gen)
 
 struct pixel {
-    int r = 0;
-    int g = 0;
-    int b = 0;
+    int  r = 0;
+    int  g = 0;
+    int  b = 0;
 };
+
+struct BmpHeader {
+    char bitmapSignatureBytes[2] = {'B', 'M'};
+    uint32_t sizeOfBitmapFile = 54 + 786432;
+    uint32_t reservedBytes = 0;
+    uint32_t pixelDataOffset = 54;
+} bmpHeader;
+
+struct BmpInfoHeader {
+    uint32_t sizeOfThisHeader = 40;
+    int32_t width = 512; // in pixels
+    int32_t height = 512; // in pixels
+    uint16_t numberOfColorPlanes = 1; // must be 1
+    uint16_t colorDepth = 24;
+    uint32_t compressionMethod = 0;
+    uint32_t rawBitmapDataSize = 0; // generally ignored
+    int32_t horizontalResolution = 3780; // in pixel per meter
+    int32_t verticalResolution = 3780; // in pixel per meter
+    uint32_t colorTableEntries = 0;
+    uint32_t importantColors = 0;
+} bmpInfoHeader;
 
 float fade(float t) {
 	return ((6*t - 15)*t + 10)*t*t*t;
@@ -24,7 +47,6 @@ float fade(float t) {
 float lerp(float t, float a1, float a2) {
 	return a1 + t*(a2-a1);
 }
-
 
 float degreeToRadian(int degree){
     return degree * (M_PI / 180);
@@ -71,6 +93,22 @@ float dotProduct (vector<float> random_vector, vector<float> distance_vector){
     return (random_vector[0]*distance_vector[0]) + (random_vector[1]*distance_vector[1]);
 }
 
+int formatResult(float res){
+    //shift and map range
+    res = res + 1; // bring results from -1 to 1 to 0 to 2
+    res = (res * 255) /2;
+    int result = res;
+    //clamping
+    if (result > 255){
+        result = 255;
+    }
+    else if (result < 0){
+        result = 0;
+    }
+    return result;
+
+}
+
 int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dimension){
     //Input is x, y coordinate pair, Output is an integer from 0 to 255
     //Step 1 - coordinates to grid points
@@ -115,8 +153,7 @@ int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dime
     float result = lerp(u, lerp(v, dot_bl, dot_tl), lerp(v, dot_br, dot_tr));
 
     //Step 6 - Map value to correct range
-
-    return result;
+    return formatResult(result);
 }
 
 void processPixels(vector<vector<pixel>> &pixel_grid, int pixel_dimension, vector<vector<vector<float>>> grid){
@@ -152,6 +189,30 @@ int main(){
     vector<vector<pixel>> pixel_store;
     processPixels(pixel_store,pixel_dimension, grid);
 
+    ofstream fout("output.bmp", ios::binary);
+
+    BmpHeader file_head;
+    file_head.sizeOfBitmapFile = 54 + (3* pixel_dimension*pixel_dimension);
+    BmpInfoHeader info_head;
+    info_head.height = pixel_dimension;
+    info_head.width = pixel_dimension;
+    fout.write((char *) &file_head, 14);
+    fout.write((char *) &info_head, 40);
+
+    for (int x = 0; x < pixel_dimension; x++){
+        vector<pixel> current_row = pixel_store[x];
+        for (int y = 0; y < pixel_dimension; y++){
+            pixel current_pixel = current_row[y];
+            uint8_t blue = current_pixel.b;
+            fout.write((char *) &blue, 1);
+            uint8_t red = current_pixel.r;
+            fout.write((char *) &red, 1);
+            uint8_t green = current_pixel.g;
+            fout.write((char *) &green, 1);
+        }
+    }
+
+    fout.close();
 
     return 0;
 }

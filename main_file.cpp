@@ -54,8 +54,8 @@ float pointConvert(int coordinate, int pixel_dimension, int grid_dimension){
     float c = float(coordinate);
     float p = float(pixel_dimension);
     float g = float(grid_dimension);
-    float ret = (c/p)*g;
-    return ret + 0.0000000000001;
+    float ret = (c/p)*(g-1); //Was causing the seg fault
+    return ret;
 
 }
 
@@ -82,6 +82,12 @@ int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dime
     int above_x = ceil(x_c);
     int below_y = floor(y_c);
     int above_y = ceil(y_c);
+    if(below_x == above_x){
+        above_x++;
+    }
+    if (below_y == above_y){
+        above_y++;
+    }
 
     //Step 3 - Calculate distance vectors from point
     vector<float> bottom_l_dist = calcDistance(x_c, y_c, below_x, below_y);
@@ -146,7 +152,6 @@ int main(){
     vector<vector<pixel>> pixel_store;
     processPixels(pixel_store,pixel_dimension, grid);
 
-    cout << "this is a test";
 
     return 0;
 }

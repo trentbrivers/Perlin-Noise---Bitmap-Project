@@ -42,6 +42,7 @@ NOTE: while it's not a step of the algorithm, it may be helpful to visualize wha
 ![640px-PerlinNoiseDotProducts svg](https://github.com/user-attachments/assets/3c510080-ade3-496f-8fa7-9625b7a68133)
 
 The final step in the process is to interpolate the results of the dot products from the vectors. This is the step that makes Perlin Noise feel more natural than other noise algorithms. It forms a smooth gradient between the value of the graph. 
+Ken Perlin's original Perlin Noise implementation used 3t<sup>2</sup>-2t<sup>3</sup> to interpolate between values. This 
 
 Perlin Noise is cool<sup>5</sup>
 

@@ -9,7 +9,7 @@ Perlin Noise was first developed in the 1980's while Ken Perlin was working on s
 \
 With a so-called "random" result such as this, there is a uniformity and lack of detail to the image that makes it very unappealing to look at and almost useless for artistic purposes. It's difficult to point to where we might see this kind of uniform randomness reflected in the natural world. 
 
-Perlin Noise was created to address the problem of how artifical and "machine-like" established noise algorithms were. The following image is an example of what Perlin Noise can look produce:
+Perlin Noise was created to address the problem of how artifical and "machine-like" established noise algorithms were. The following image is an example of what Perlin Noise can produce:
 \
 ![noiseTexture (1)](https://github.com/user-attachments/assets/635af4ca-25c8-41dd-865b-5819b19ff9a4)
 \
@@ -25,7 +25,7 @@ One of the wonderful characteristics of Perlin Noise is that, abstractly, it's a
 #### Defining a grid to form the gradient
 In the case of 2D perlin noise, a 2D grid of integer points is taken as an input.\
 ![point_grid_1](https://github.com/user-attachments/assets/2c99bb35-3121-4915-9c75-210f10aa9595)\
-A little work needs to happen with the input grid to get it really for the algorithm. What happens is the grid has constant, pseudo-random 2-dimensional unit vectors added for every point of the grid.
+A little work needs to happen with the input grid to get it ready for the algorithm. What happens is the grid has constant, pseudo-random 2-dimensional unit vectors added for every point of the grid.
 
 
 ![point_grid_2](https://github.com/user-attachments/assets/0d573fe0-007f-41cb-8199-c4287ef36ddc)\
@@ -35,7 +35,12 @@ What we need is a set of distance vectors from the nearest points corners of the
 
 ![point_grid_3](https://github.com/user-attachments/assets/c323b3b0-df2a-4396-afda-ff5bdd58229f)
 
-We now have two vectors for each corner. Here, we take the dot product of the 
+We now have two vectors for each corner. Here, we take the dot product of the two vectors, repeating the process for each corner. This produces 4 dot products in total. 
+
+NOTE: while it's not a step of the algorithm, it may be helpful to visualize what we've done here. If we repeated this process for a number of prospective points across the grid, we'd end up with a series of dot products that covered the grid, and looked something like this:
+
+![640px-PerlinNoiseDotProducts svg](https://github.com/user-attachments/assets/3c510080-ade3-496f-8fa7-9625b7a68133)
+
 
 Perlin Noise is cool<sup>3</sup>
 

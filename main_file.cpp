@@ -63,6 +63,10 @@ vector<float> calcDistance(float point_x, float point_y, int corner_x, int corne
     return ret;
 }
 
+float dotProduct (vector<float> random_vector, vector<float> distance_vector){
+    return (random_vector[0]*distance_vector[0]) + (random_vector[1]*distance_vector[1]);
+}
+
 int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dimension){
     //Input is x, y coordinate pair, Output is an integer from 0 to 255
     //Step 1 - coordinates to grid points
@@ -86,6 +90,8 @@ int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dime
     vector<float> bottom_right = grid[above_x][below_y];
     vector<float> top_left = grid[below_x][above_y];
     vector<float> top_right = grid[above_x][above_y];
+
+    //Step 4 - Calculating the dot product
 
     return 0;
 }

@@ -17,12 +17,14 @@ struct pixel {
     int b = 0;
 };
 
-float fade(float coord) {
-	return ((6*coord - 15)*coord + 10)*coord*coord*coord;
+float fade(float t) {
+	return ((6*t - 15)*t + 10)*t*t*t;
 }
-float lerp(float t,float  a1, float a2) {
+
+float lerp(float t, float a1, float a2) {
 	return a1 + t*(a2-a1);
 }
+
 
 float degreeToRadian(int degree){
     return degree * (M_PI / 180);
@@ -100,19 +102,25 @@ int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dime
     float dot_tr = dotProduct(top_right, top_r_dist);
 
     //Step 5 - Interpolate dot products
-    float faded_x = fade(x_c);
-    float faded_y = fade(y_c);
-    float result = lerp(faded_x, lerp(faded_y, dot_bl, dot_tl), lerp(faded_y,dot_br, dot_tr));
+    float xf = x_c - below_x;
+    float yf = y_c - below_y;
+    float u = fade(xf);
+    float v = fade(yf);
+    float result = lerp(u, lerp(v, dot_bl, dot_tl), lerp(v, dot_br, dot_tr));
 
     //Step 6 - Map value to correct range
-    return 0;
+
+    return result;
 }
 
 void processPixels(vector<vector<pixel>> &pixel_grid, int pixel_dimension, vector<vector<vector<float>>> grid){
     for (int row = 0; row < pixel_dimension; row++){
+        vector<pixel> new_row;
+        pixel_grid.push_back(new_row);
         for (int col = 0; col < pixel_dimension; col++){
             pixel current;
             current.r = current.g = current.b = perlinNoise(row, col, grid, pixel_dimension);
+            pixel_grid[row].push_back(current);
         }
     }
 }
@@ -138,8 +146,7 @@ int main(){
     vector<vector<pixel>> pixel_store;
     processPixels(pixel_store,pixel_dimension, grid);
 
-    //float testo = pointConvert(123, pixel_dimension, dimension);
-    //cout << "point conversion: " << testo << endl;
+    cout << "this is a test";
 
     return 0;
 }

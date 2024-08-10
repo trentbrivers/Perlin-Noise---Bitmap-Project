@@ -17,9 +17,11 @@ struct pixel {
     int b = 0;
 };
 
-double lerp(double t, double a, double b) {
-    //linear interpolation function
-    return a + t * (b - a); 
+float fade(float coord) {
+	return ((6*coord - 15)*coord + 10)*coord*coord*coord;
+}
+float lerp(float t,float  a1, float a2) {
+	return a1 + t*(a2-a1);
 }
 
 float degreeToRadian(int degree){
@@ -51,7 +53,7 @@ float pointConvert(int coordinate, int pixel_dimension, int grid_dimension){
     float p = float(pixel_dimension);
     float g = float(grid_dimension);
     float ret = (c/p)*g;
-    return ret;
+    return ret + 0.0000000000001;
 
 }
 
@@ -92,7 +94,17 @@ int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dime
     vector<float> top_right = grid[above_x][above_y];
 
     //Step 4 - Calculating the dot product
+    float dot_bl = dotProduct(bottom_left, bottom_l_dist);
+    float dot_br = dotProduct(bottom_right, bottom_r_dist);
+    float dot_tl = dotProduct(top_left, top_r_dist);
+    float dot_tr = dotProduct(top_right, top_r_dist);
 
+    //Step 5 - Interpolate dot products
+    float faded_x = fade(x_c);
+    float faded_y = fade(y_c);
+    float result = lerp(faded_x, lerp(faded_y, dot_bl, dot_tl), lerp(faded_y,dot_br, dot_tr));
+
+    //Step 6 - Map value to correct range
     return 0;
 }
 

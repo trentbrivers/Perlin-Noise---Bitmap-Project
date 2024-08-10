@@ -55,11 +55,38 @@ float pointConvert(int coordinate, int pixel_dimension, int grid_dimension){
 
 }
 
+vector<float> calcDistance(float point_x, float point_y, int corner_x, int corner_y){
+    vector<float> ret = {0.0, 0.0};
+    ret[0] = point_x - corner_x;
+    ret[1] = point_y - corner_y;
+
+    return ret;
+}
+
 int perlinNoise(int x, int y, vector<vector<vector<float>>> grid, int pixel_dimension){
-    //Input is x, y coordinate pair 
+    //Input is x, y coordinate pair, Output is an integer from 0 to 255
     //Step 1 - coordinates to grid points
     float x_c = pointConvert(x, pixel_dimension, grid.size());
     float y_c = pointConvert(y, pixel_dimension, grid.size());
+
+    //Step 2 - find nearest points
+    int below_x = floor(x_c);
+    int above_x = ceil(x_c);
+    int below_y = floor(y_c);
+    int above_y = ceil(y_c);
+
+    //Step 3 - Calculate distance vectors from point
+    vector<float> bottom_l_dist = calcDistance(x_c, y_c, below_x, below_y);
+    vector<float> bottom_r_dist = calcDistance(x_c, y_c, above_x, below_y);
+    vector<float> top_l_dist = calcDistance(x_c, y_c, below_x, above_y);
+    vector<float> top_r_dist = calcDistance(x_c, y_c, above_x, above_y);
+
+    //Retrieving pseudo-random point vectors
+    vector<float> bottom_left = grid[below_x][below_y];
+    vector<float> bottom_right = grid[above_x][below_y];
+    vector<float> top_left = grid[below_x][above_y];
+    vector<float> top_right = grid[above_x][above_y];
+
     return 0;
 }
 

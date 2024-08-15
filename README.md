@@ -65,8 +65,8 @@ Running it from the terminal does work, and does produce an output file. Likewis
 
 
 References:
-1. https://cs.nyu.edu/~perlin/doc/oscar.html\
-2. http://mrl.nyu.edu/~perlin/paper445.pdf\
-3. https://adrianb.io/2014/08/09/perlinnoise.html\
-4. https://www.educative.io/answers/dot-product-of-two-vectors-in-cpp\
-5. https://www.jordansavant.com/book/algorithms/perlin_noise.md\
+1. https://cs.nyu.edu/~perlin/doc/oscar.html
+2. http://mrl.nyu.edu/~perlin/paper445.pdf
+3. https://adrianb.io/2014/08/09/perlinnoise.html
+4. https://www.educative.io/answers/dot-product-of-two-vectors-in-cpp
+5. https://www.jordansavant.com/book/algorithms/perlin_noise.md
